@@ -15,6 +15,7 @@ interface ExportOptions {
   format: 'chatlab' | 'chatlab-jsonl' | 'json' | 'html' | 'txt' | 'excel' | 'sql'
   dateRange: { start: Date; end: Date } | null
   useAllTime: boolean
+  exportAvatars: boolean
 }
 
 interface ExportResult {
@@ -41,7 +42,8 @@ function ExportPage() {
       start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
       end: new Date()
     },
-    useAllTime: true
+    useAllTime: true,
+    exportAvatars: true
   })
 
   const loadSessions = useCallback(async () => {
@@ -140,6 +142,7 @@ function ExportPage() {
       const sessionList = Array.from(selectedSessions)
       const exportOptions = {
         format: options.format,
+        exportAvatars: options.exportAvatars,
         dateRange: options.useAllTime ? null : options.dateRange ? {
           start: Math.floor(options.dateRange.start.getTime() / 1000),
           end: Math.floor(options.dateRange.end.getTime() / 1000)
@@ -286,6 +289,20 @@ function ExportPage() {
                   </button>
                 </div>
               )}
+            </div>
+          </div>
+
+          <div className="setting-section">
+            <h3>导出头像</h3>
+            <div className="time-options">
+              <label className="checkbox-item">
+                <input
+                  type="checkbox"
+                  checked={options.exportAvatars}
+                  onChange={e => setOptions({ ...options, exportAvatars: e.target.checked })}
+                />
+                <span>导出头像图片</span>
+              </label>
             </div>
           </div>
 
