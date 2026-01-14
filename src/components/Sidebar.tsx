@@ -34,15 +34,7 @@ function Sidebar() {
           <span className="nav-label">聊天</span>
         </NavLink>
 
-        {/* 好友克隆 */}
-        <NavLink
-          to="/clone"
-          className={`nav-item ${isActive('/clone') ? 'active' : ''}`}
-          title={collapsed ? '好友克隆' : undefined}
-        >
-          <span className="nav-icon"><Bot size={20} /></span>
-          <span className="nav-label">好友克隆</span>
-        </NavLink>
+
 
         {/* 私聊分析 */}
         <NavLink
@@ -94,10 +86,10 @@ function Sidebar() {
           <span className="nav-label">数据管理</span>
         </NavLink>
       </nav>
-      
+
       <div className="sidebar-footer">
-        <NavLink 
-          to="/settings" 
+        <NavLink
+          to="/settings"
           className={`nav-item ${isActive('/settings') ? 'active' : ''}`}
           title={collapsed ? '设置' : undefined}
         >
@@ -106,8 +98,8 @@ function Sidebar() {
           </span>
           <span className="nav-label">设置</span>
         </NavLink>
-        
-        <button 
+
+        <button
           className="collapse-btn"
           onClick={() => setCollapsed(!collapsed)}
           title={collapsed ? '展开菜单' : '收起菜单'}

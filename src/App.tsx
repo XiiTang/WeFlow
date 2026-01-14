@@ -14,7 +14,7 @@ import GroupAnalyticsPage from './pages/GroupAnalyticsPage'
 import DataManagementPage from './pages/DataManagementPage'
 import SettingsPage from './pages/SettingsPage'
 import ExportPage from './pages/ExportPage'
-import ClonePage from './pages/ClonePage'
+
 import { useAppStore } from './stores/appStore'
 import { themes, useThemeStore, type ThemeId } from './stores/themeStore'
 import * as configService from './services/config'
@@ -189,7 +189,7 @@ function App() {
           }
           console.log('检测到已保存的配置，正在自动连接...')
           const result = await window.electronAPI.chat.connect()
-          
+
           if (result.success) {
             console.log('自动连接成功')
             setDbConnected(true, dbPath)
@@ -312,7 +312,6 @@ function App() {
               <Route path="/group-analytics" element={<GroupAnalyticsPage />} />
               <Route path="/annual-report" element={<AnnualReportPage />} />
               <Route path="/annual-report/view" element={<AnnualReportWindow />} />
-              <Route path="/clone" element={<ClonePage />} />
               <Route path="/data-management" element={<DataManagementPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/export" element={<ExportPage />} />

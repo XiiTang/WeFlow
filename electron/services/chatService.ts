@@ -58,6 +58,7 @@ export interface Message {
   aesKey?: string
   encrypVer?: number
   cdnThumbUrl?: string
+  voiceDurationSeconds?: number
 }
 
 export interface Contact {
@@ -2495,12 +2496,12 @@ class ChatService {
     }
 
     const aesData = payload.subarray(0, alignedAesSize)
-    let unpadded = Buffer.alloc(0)
+    let unpadded: Buffer = Buffer.alloc(0)
     if (aesData.length > 0) {
       const decipher = crypto.createDecipheriv('aes-128-ecb', aesKey, Buffer.alloc(0))
       decipher.setAutoPadding(false)
       const decrypted = Buffer.concat([decipher.update(aesData), decipher.final()])
-      unpadded = this.strictRemovePadding(decrypted)
+      unpadded = this.strictRemovePadding(decrypted) as Buffer
     }
 
     const remaining = payload.subarray(alignedAesSize)
@@ -2508,21 +2509,21 @@ class ChatService {
       throw new Error('文件格式异常：XOR 数据长度不合法')
     }
 
-    let rawData = Buffer.alloc(0)
-    let xoredData = Buffer.alloc(0)
+    let rawData: Buffer = Buffer.alloc(0)
+    let xoredData: Buffer = Buffer.alloc(0)
     if (xorSize > 0) {
       const rawLength = remaining.length - xorSize
       if (rawLength < 0) {
         throw new Error('文件格式异常：原始数据长度小于XOR长度')
       }
-      rawData = remaining.subarray(0, rawLength)
+      rawData = remaining.subarray(0, rawLength) as Buffer
       const xorData = remaining.subarray(rawLength)
       xoredData = Buffer.alloc(xorData.length)
       for (let i = 0; i < xorData.length; i++) {
         xoredData[i] = xorData[i] ^ xorKey
       }
     } else {
-      rawData = remaining
+      rawData = remaining as Buffer
       xoredData = Buffer.alloc(0)
     }
 

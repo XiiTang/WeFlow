@@ -108,19 +108,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getVoiceData: (sessionId: string, msgId: string) => ipcRenderer.invoke('chat:getVoiceData', sessionId, msgId)
   },
 
-  // 私聊克隆
-  clone: {
-    indexSession: (sessionId: string, options?: any) => ipcRenderer.invoke('clone:indexSession', sessionId, options),
-    query: (payload: { sessionId: string; keyword: string; options?: any }) => ipcRenderer.invoke('clone:query', payload),
-    getToneGuide: (sessionId: string) => ipcRenderer.invoke('clone:getToneGuide', sessionId),
-    generateToneGuide: (sessionId: string, sampleSize?: number) =>
-      ipcRenderer.invoke('clone:generateToneGuide', sessionId, sampleSize),
-    chat: (payload: { sessionId: string; message: string; topK?: number }) => ipcRenderer.invoke('clone:chat', payload),
-    onIndexProgress: (callback: (payload: { requestId: string; totalMessages: number; totalChunks: number; hasMore: boolean }) => void) => {
-      ipcRenderer.on('clone:indexProgress', (_, payload) => callback(payload))
-      return () => ipcRenderer.removeAllListeners('clone:indexProgress')
-    }
-  },
+
 
   // 图片解密
   image: {
